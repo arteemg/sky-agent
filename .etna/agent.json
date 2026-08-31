@@ -1,0 +1,34 @@
+{
+  "schema": "etna-agent-contract/v1",
+  "generatedBy": "Agent Etna",
+  "agent": {
+    "name": "sky agent",
+    "role": null,
+    "repo": "arteemg/sky-agent",
+    "branch": "main"
+  },
+  "calibration": {
+    "purpose": "sky agent is a general conversational assistant reachable through HTTP API and Telegram, backed by an LLM and running on Railway.",
+    "audience": "",
+    "difficulty": "foundational",
+    "exampleAsks": [],
+    "toolsInScope": [],
+    "outOfScope": []
+  },
+  "guardrails": [
+    "Stay focused on this purpose: sky agent is a general conversational assistant reachable through HTTP API and Telegram, backed by an LLM and running on Railway."
+  ],
+  "changelog": [
+    {
+      "date": "2026-08-31",
+      "cycleNumber": 2,
+      "changes": [
+        {
+          "capability": "context-retention",
+          "rationale": "Scopes the fix to the exact phrasing failure (blanket 'no memory' denial) as narrow domain knowledge without touching the system prompt that previously regressed the cost-unbounded-loop guardrail."
+        }
+      ],
+      "merged": true
+    }
+  ]
+}
