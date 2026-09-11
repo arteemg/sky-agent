@@ -21,7 +21,7 @@ Deploy your own AI agent to the cloud in one click.
 ## Deploy
 
 1. Fork this repo.
-2. On [Railway](https://railway.com): **New Project → Deploy from GitHub repo** → pick your fork.
+2. On [Railway](https://railway.com?referralCode=JRZMm1): **New Project → Deploy from GitHub repo** → pick your fork.
 3. Add `LLM_API_KEY` - this can be an API key from any provider, including Anthropic, OpenAI, OpenRouter, etc.
 4. Add `TELEGRAM_BOT_TOKEN` (see below)
 5. Deploy.
