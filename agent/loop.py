@@ -11,6 +11,7 @@ LLM-API-KEY, and everything else stays the same.
 
 import json
 import os
+import uuid
 
 from openai import OpenAI
 
@@ -122,7 +123,11 @@ def respond(chat_id: str, text: str, config: dict) -> str:
                 {
                     "role": "tool",
                     "tool_call_id": tc.id,
-                    "content": tools.run(tc.function.name, args),
+                    "content": tools.run(
+                        tc.function.name, args,
+                        session_id=uuid.uuid5(uuid.NAMESPACE_URL, "sky-agent:" + chat_id).hex,
+                        model_name=kwargs["model"],
+                    ),
                 }
             )
         kwargs["messages"] = messages
