@@ -2,6 +2,8 @@ import asyncio
 import importlib
 import json
 import os
+import subprocess
+import sys
 import unittest
 from types import SimpleNamespace as NS
 from unittest.mock import patch
@@ -129,6 +131,15 @@ class ParallelSearchTests(unittest.TestCase):
                      if json.loads(r.content).get("method") == "tools/call"]
         self.assertEqual(arguments[0]["session_id"], arguments[1]["session_id"])
         self.assertEqual(arguments[0]["model_name"], "configured-model")
+
+    def test_default_chat_sessions_differ_across_processes(self):
+        script = (
+            "from agent.loop import _WEB_SESSION_NAMESPACE; import uuid; "
+            "print(uuid.uuid5(_WEB_SESSION_NAMESPACE, 'api').hex)"
+        )
+        sessions = [subprocess.check_output([sys.executable, "-c", script]).strip()
+                    for _ in range(2)]
+        self.assertNotEqual(sessions[0], sessions[1])
 
 
 if __name__ == "__main__":

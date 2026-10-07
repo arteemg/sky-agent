@@ -21,6 +21,8 @@ DEFAULT_BASE_URL = "https://api.anthropic.com/v1/"  # Anthropic's OpenAI-compati
 
 _client = None
 _client_base = None
+# Separate deployments while keeping each chat stable across turns in this process.
+_WEB_SESSION_NAMESPACE = uuid.uuid4()
 
 
 def _get_client(config: dict) -> OpenAI:
@@ -125,7 +127,7 @@ def respond(chat_id: str, text: str, config: dict) -> str:
                     "tool_call_id": tc.id,
                     "content": tools.run(
                         tc.function.name, args,
-                        session_id=uuid.uuid5(uuid.NAMESPACE_URL, "sky-agent:" + chat_id).hex,
+                        session_id=uuid.uuid5(_WEB_SESSION_NAMESPACE, chat_id).hex,
                         model_name=kwargs["model"],
                     ),
                 }
