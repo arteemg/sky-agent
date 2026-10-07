@@ -181,15 +181,29 @@ TOOLS = {
     },
 }
 
+if os.environ.get("PARALLEL_SEARCH_ENABLED", "").lower() == "true":
+    from agent.parallel_search import TOOLS as WEB_TOOLS
+
+    TOOLS.update(WEB_TOOLS)
+
 DEFINITIONS = [t["definition"] for t in TOOLS.values()]
 
 
-def run(name: str, tool_input: dict) -> str:
+def run(name: str, tool_input: dict, *, session_id=None, model_name=None) -> str:
     """Execute a tool by name. Errors are returned as text so the model
     can recover instead of the whole agent crashing."""
     if name not in TOOLS:
         return f"Tool error: unknown tool '{name}'"
     try:
-        return str(TOOLS[name]["function"](**(tool_input or {})))
+        arguments = dict(tool_input or {})
+        if name in ("web_search", "web_fetch"):
+            # Runtime metadata comes from the caller, never model-generated arguments.
+            arguments.pop("session_id", None)
+            arguments.pop("model_name", None)
+            if session_id:
+                arguments["session_id"] = session_id
+            if model_name:
+                arguments["model_name"] = model_name
+        return str(TOOLS[name]["function"](**arguments))
     except Exception as exc:  # noqa: BLE001 — surface anything to the model
         return f"Tool error: {exc}"

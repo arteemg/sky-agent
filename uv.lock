@@ -180,6 +180,8 @@ dependencies = [
     { name = "fastapi" },
     { name = "gepa" },
     { name = "harbor" },
+    { name = "httpx2" },
+    { name = "mcp" },
     { name = "numpy" },
     { name = "openai" },
     { name = "openai-agents" },
@@ -195,6 +197,8 @@ requires-dist = [
     { name = "fastapi", specifier = ">=0.110" },
     { name = "gepa", specifier = ">=0.1.4" },
     { name = "harbor" },
+    { name = "httpx2", specifier = ">=2,<3" },
+    { name = "mcp", specifier = ">=2,<3" },
     { name = "numpy" },
     { name = "openai" },
     { name = "openai-agents" },
@@ -830,8 +834,8 @@ name = "httpcore2"
 version = "2.10.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "h11", marker = "sys_platform != 'emscripten'" },
-    { name = "truststore", marker = "sys_platform != 'emscripten'" },
+    { name = "h11" },
+    { name = "truststore" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a9/83/a896fc59940fc5a6e2aff3a4be1d92fa890112936803b331cae75a993c34/httpcore2-2.10.0.tar.gz", hash = "sha256:13c0cc3d1919d4f28457f60cd2c2abe04113a8af184ccf1142811beba936f9dc", size = 67427, upload-time = "2026-08-09T09:11:32.123Z" }
 wheels = [

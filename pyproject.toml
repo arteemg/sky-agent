@@ -13,6 +13,8 @@ dependencies = [
     "openpyxl",
     "numpy",
     "requests>=2.31",
+    "mcp>=2,<3",
+    "httpx2>=2,<3",
     "fastapi>=0.110",
     "uvicorn>=0.29",
     "gepa>=0.1.4",

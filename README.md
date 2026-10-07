@@ -51,6 +51,29 @@ In the GitHub web UI open `knowledge/`, **Add file → Upload files**, commit. A
 
 Plain-text formats work (md, txt, csv, code). PDFs and images are detected but not supported for now.
 
+## Optional web search
+
+Set `PARALLEL_SEARCH_ENABLED=true` in Railway's variables (or your local environment)
+and restart the agent. This adds `web_search` and `web_fetch` to the existing tool
+loop through [Parallel Search MCP](https://docs.parallel.ai/integrations/mcp/search-mcp),
+using Streamable HTTP at `https://search.parallel.ai/mcp`. No Parallel API key is
+needed. The anonymous service has rate limits; your LLM provider still requires
+its own setup and may charge for inference. File tools and model settings stay
+unchanged, and web tools are disabled by default.
+
+Try asking: "Search for Python's asyncio documentation, then read the page about
+timeouts." Web calls time out after 60 seconds and return errors to the agent so
+it can recover. Search objectives and queries, fetched URLs, a stable chat
+identifier and the configured model name are sent to Parallel.
+
+For local use, install the same dependencies as the Docker image from the repo root:
+
+```sh
+uv venv
+uv pip install -r pyproject.toml
+PARALLEL_SEARCH_ENABLED=true uv run python main.py
+```
+
 ## How it works
 
 ```
